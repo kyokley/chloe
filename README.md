@@ -128,6 +128,23 @@ cargo build --release --locked
 ./target/release/chloe
 ```
 
+### Run with Nix
+
+From a checkout with Nix flakes enabled:
+
+```bash
+nix run .
+```
+
+To build without launching the app:
+
+```bash
+nix build .
+./result/bin/chloe
+```
+
+Install your preferred AI coding agents separately and keep them on `PATH`.
+
 ### Run
 
 ```bash

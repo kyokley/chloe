@@ -5,7 +5,7 @@ use uuid::Uuid;
 
 pub static SPEC: ProviderSpec = ProviderSpec {
     command: "opencode",
-    prompt_style: PromptStyle::Flag("--prompt"),
+    prompt_style: PromptStyle::Subcommand("run"),
     oneshot_style: OneShotPromptStyle::Subcommand("run"),
     generate_files,
 };

@@ -353,20 +353,7 @@ pub fn check_merge_conflicts(
     Ok(None)
 }
 
-/// Get the repository root for a given path
-///
-/// # Errors
-///
-/// Returns an error if the path is not within a git repository.
-pub fn find_repository_root(path: &Path) -> Result<PathBuf> {
-    let repository = Repository::discover(path).context("Not a git repository")?;
-
-    let workdir = repository
-        .workdir()
-        .ok_or_else(|| anyhow!("Bare repository has no working directory"))?;
-
-    Ok(workdir.to_path_buf())
-}
+pub use super::repository::{find_repository_root, find_repository_root_for_vcs};
 
 /// List all existing worktrees/workspaces in the repository
 ///

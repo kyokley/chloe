@@ -20,7 +20,8 @@ impl TasksState {
             return options;
         };
 
-        let Ok(repository_root) = crate::views::worktree::find_repository_root(&current_directory)
+        let Ok(repository_root) =
+            crate::views::worktree::find_repository_root_for_vcs(&current_directory, vcs_command)
         else {
             return options;
         };
@@ -95,7 +96,8 @@ impl TasksState {
         let current_directory = std::env::current_dir()
             .map_err(|error| anyhow::anyhow!("Failed to get current directory: {error}"))?;
 
-        let repository_root = crate::views::worktree::find_repository_root(&current_directory)?;
+        let repository_root =
+            crate::views::worktree::find_repository_root_for_vcs(&current_directory, vcs_command)?;
 
         crate::views::worktree::create_worktree(&repository_root, task_title, task_id, vcs_command)
     }
@@ -130,7 +132,8 @@ impl TasksState {
             return;
         };
 
-        let Ok(repository_root) = crate::views::worktree::find_repository_root(&current_directory)
+        let Ok(repository_root) =
+            crate::views::worktree::find_repository_root_for_vcs(&current_directory, vcs_command)
         else {
             return;
         };

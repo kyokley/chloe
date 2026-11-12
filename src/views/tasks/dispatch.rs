@@ -179,10 +179,11 @@ fn process_pending_actions(app: &mut App) {
     }
 
     if let Some(worktree_info) = app.tasks.pending_worktree_deletion.take()
-        && let Ok(repo_root) = views::worktree::find_repository_root(
+        && let Ok(repo_root) = views::worktree::find_repository_root_for_vcs(
             std::env::current_dir()
                 .unwrap_or_else(|_| std::path::PathBuf::from("."))
                 .as_path(),
+            &app.settings.settings.vcs_command,
         )
     {
         let vcs_command = &app.settings.settings.vcs_command;

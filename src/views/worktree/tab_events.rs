@@ -167,15 +167,16 @@ impl WorktreeTabState {
             }
         };
 
-        let repository_root = match super::operations::find_repository_root(&current_dir) {
-            Ok(root) => root,
-            Err(error) => {
-                self.error_message = Some(format!("Not a git repository: {error}"));
-                self.worktrees.clear();
-                self.selected_index = None;
-                return;
-            }
-        };
+        let repository_root =
+            match super::operations::find_repository_root_for_vcs(&current_dir, vcs_command) {
+                Ok(root) => root,
+                Err(error) => {
+                    self.error_message = Some(format!("Failed to find repository root: {error}"));
+                    self.worktrees.clear();
+                    self.selected_index = None;
+                    return;
+                }
+            };
 
         match super::operations::list_worktrees(&repository_root, vcs_command) {
             Ok(worktrees) => {
@@ -217,13 +218,14 @@ impl WorktreeTabState {
             }
         };
 
-        let repository_root = match super::operations::find_repository_root(&current_dir) {
-            Ok(root) => root,
-            Err(error) => {
-                self.error_message = Some(format!("Not a git repository: {error}"));
-                return;
-            }
-        };
+        let repository_root =
+            match super::operations::find_repository_root_for_vcs(&current_dir, vcs_command) {
+                Ok(root) => root,
+                Err(error) => {
+                    self.error_message = Some(format!("Failed to find repository root: {error}"));
+                    return;
+                }
+            };
 
         match super::operations::delete_worktree(&repository_root, &worktree_info, vcs_command) {
             Ok(()) => {
